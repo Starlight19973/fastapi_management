@@ -16,3 +16,4 @@ with engine.connect() as conn:
     res = conn.execute(text("SELECT VERSION()"))
     print(f"{res.first()=}")
     conn.commit()
+
