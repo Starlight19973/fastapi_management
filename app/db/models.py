@@ -2,15 +2,10 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Enu
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-import enum
+from schemas import OrderStatusEnum
+
 
 Base = declarative_base()
-
-
-class OrderStatus(enum.Enum):
-    IN_PROGRESS = "в процессе"
-    SHIPPED = "отправлен"
-    DELIVERED = "доставлен"
 
 
 class Product(Base):
@@ -30,7 +25,7 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
-    status = Column(Enum(OrderStatus), default=OrderStatus.IN_PROGRESS)
+    status = Column(Enum(OrderStatusEnum), default=OrderStatusEnum.IN_PROGRESS)
 
     order_items = relationship("OrderItem", back_populates="order")
 
