@@ -12,8 +12,19 @@ engine = create_engine(
 )
 
 
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
 with engine.connect() as conn:
     res = conn.execute(text("SELECT VERSION()"))
     print(f"{res.first()=}")
     conn.commit()
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
