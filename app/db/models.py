@@ -2,8 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Enu
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-from schemas import OrderStatusEnum
-
+from app.db.schemas import OrderStatusEnum
 
 Base = declarative_base()
 
@@ -17,6 +16,7 @@ class Product(Base):
     price = Column(Float)
     stock_quantity = Column(Integer)
 
+    # Здесь back_populates связывает таблицы Products и OrderItems
     order_items = relationship("OrderItem", back_populates="product")
 
 
@@ -27,7 +27,8 @@ class Order(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     status = Column(Enum(OrderStatusEnum), default=OrderStatusEnum.IN_PROGRESS)
 
-    order_items = relationship("OrderItem", back_populates="order")
+    # Добавляем lazy='joined' для явной загрузки
+    order_items = relationship("OrderItem", back_populates="order", lazy='joined')
 
 
 class OrderItem(Base):
@@ -38,6 +39,10 @@ class OrderItem(Base):
     product_id = Column(Integer, ForeignKey('products.id'))
     quantity = Column(Integer)
 
-    order = relationship("Order", back_populates="order_items")
-    product = relationship("Product", back_populates="order_items")
+    # Связь с Order
+    order = relationship("Order", back_populates="order_items", lazy='joined')
+
+    # Связь с Product
+    product = relationship("Product", back_populates="order_items", lazy='joined')
+
 

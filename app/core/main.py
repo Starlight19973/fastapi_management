@@ -1,10 +1,13 @@
 from fastapi import FastAPI
-from core.routers import products, orders
+from app.core.routers import products, orders
 
 app = FastAPI()
 
+
+# Подключаем роутеры
 app.include_router(products.router)
 app.include_router(orders.router)
+
 
 # Запуск приложения
 if __name__ == "__main__":

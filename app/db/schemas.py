@@ -5,9 +5,9 @@ from typing import List, Optional
 
 
 class OrderStatusEnum(enum.Enum):
-    IN_PROGRESS = "в процессе"
-    SHIPPED = "отправлен"
-    DELIVERED = "доставлен"
+    IN_PROGRESS = "IN_PROGRESS"
+    SHIPPED = "SHIPPED"
+    DELIVERED = "DELIVERED"
 
 
 # Схема для Product (товара)
