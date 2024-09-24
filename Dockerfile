@@ -34,6 +34,6 @@ COPY . /app/
 # Открываем порт для приложения
 EXPOSE 8000
 
-# Команда для запуска приложения
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Команда для запуска FastAPI с указанием правильного пути к модулю
+CMD ["uvicorn", "app.core.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
