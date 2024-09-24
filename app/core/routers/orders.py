@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 # Создание заказа (POST /orders)
-@router.post("/orders/", response_model=Order)  # Уберите поле order_items
+@router.post("/orders/", response_model=Order)
 async def create_order(order: OrderCreate, db: AsyncSession = Depends(get_db)):
     return await crud_orders.create_order(db=db, order=order)
 
